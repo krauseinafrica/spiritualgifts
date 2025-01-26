@@ -9,6 +9,23 @@ if 'game_completed' not in st.session_state:
 if 'user_responses' not in st.session_state:
     st.session_state.user_responses = {}
 
+def calculate_spiritual_gifts(responses):
+    # Simplified scoring example
+    scores = {
+        "Mercy": 0,
+        "Leadership": 0,
+        "Teaching": 0,
+        "Serving": 0,
+        "Encouragement": 0,
+    }
+    if "Pray" in responses.get("q1", ""):
+        scores["Mercy"] += 2
+    if "Help practically" in responses.get("q1", ""):
+        scores["Serving"] += 2
+    # Add more scoring logic...
+
+    return sorted(scores.items(), key=lambda x: x[1], reverse=True)
+
 # Welcome screen
 if not st.session_state.game_started:
     st.title("Discover Your Spiritual Gifts")
