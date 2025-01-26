@@ -13,17 +13,66 @@ if 'user_responses' not in st.session_state:
 
 # Define the function to calculate spiritual gifts
 def calculate_spiritual_gifts(user_responses):
-    # Example logic for calculating gifts (this should be replaced with more meaningful logic)
-    gifts = [
-        ("Mercy", 8),
-        ("Leadership", 6),
-        ("Teaching", 7),
-        ("Serving", 9),
-        ("Encouragement", 5),
-    ]
+    # Define the weights for each spiritual gift
+    gifts = {
+        "Mercy": 0,
+        "Leadership": 0,
+        "Teaching": 0,
+        "Serving": 0,
+        "Encouragement": 0
+    }
     
-    # Sort gifts based on score
-    sorted_gifts = sorted(gifts, key=lambda x: x[1], reverse=True)
+    # Round 1
+    if "q1" in user_responses:
+        if user_responses["q1"] == "Pray for them":
+            gifts["Mercy"] += 2
+        elif user_responses["q1"] == "Help practically":
+            gifts["Serving"] += 2
+        elif user_responses["q1"] == "Offer wisdom":
+            gifts["Teaching"] += 2
+        elif user_responses["q1"] == "Gather others to assist":
+            gifts["Leadership"] += 2
+        elif user_responses["q1"] == "Encourage them":
+            gifts["Encouragement"] += 2
+    
+    if "q2" in user_responses:
+        gifts["Serving"] += user_responses["q2"]  # assuming user response is a slider value (0-5)
+    
+    # Round 2
+    if "q1_round_2" in user_responses:
+        if user_responses["q1_round_2"] == "By praying for guidance":
+            gifts["Mercy"] += 2
+        elif user_responses["q1_round_2"] == "By leading others to act":
+            gifts["Leadership"] += 2
+        elif user_responses["q1_round_2"] == "By teaching others how to handle it":
+            gifts["Teaching"] += 2
+        elif user_responses["q1_round_2"] == "By organizing support":
+            gifts["Leadership"] += 2
+        elif user_responses["q1_round_2"] == "By offering emotional support":
+            gifts["Encouragement"] += 2
+    
+    if "q2_round_2" in user_responses:
+        gifts["Teaching"] += user_responses["q2_round_2"]  # Slider for frequency of helping
+    
+    # Round 3
+    if "q1_round_3" in user_responses:
+        if user_responses["q1_round_3"] == "Mercy":
+            gifts["Mercy"] += 3
+        elif user_responses["q1_round_3"] == "Leadership":
+            gifts["Leadership"] += 3
+        elif user_responses["q1_round_3"] == "Teaching":
+            gifts["Teaching"] += 3
+        elif user_responses["q1_round_3"] == "Serving":
+            gifts["Serving"] += 3
+        elif user_responses["q1_round_3"] == "Encouragement":
+            gifts["Encouragement"] += 3
+    
+    if "q2_round_3" in user_responses:
+        gifts["Encouragement"] += user_responses["q2_round_3"]  # Slider for frequency of helping
+    
+    # Calculate the results by sorting the gifts based on their scores
+    sorted_gifts = sorted(gifts.items(), key=lambda x: x[1], reverse=True)
+    
     return sorted_gifts
 
 # Function to restart the game
