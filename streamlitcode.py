@@ -172,6 +172,6 @@ if st.session_state.game_completed:
     """)
 
     # Restart button
-if st.button('Restart Game'):
-    st.session_state.clear()  # Clear all session state (optional, if you want to reset everything)
-    st.rerun()  # Reload the app to restart the game
+    if st.button('Restart Game'):
+        st.session_state.clear()  # Clear all session state (optional, if you want to reset everything)
+        st.rerun()  # Reload the app to restart the game
